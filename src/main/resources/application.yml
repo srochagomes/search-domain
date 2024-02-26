@@ -1,0 +1,22 @@
+elasticsearch-address: ${ELASTICSEARCH_ADDRESS:localhost:9200}
+
+quarkus:
+  log:
+    category:
+      "org.jboss.resteasy.reactive.server.handlers.ParameterHandler":
+        level: DEBUG
+    level: INFO
+  health:
+    openapi:
+      included: true
+    extensions:
+      enabled: true
+  smallrye-health:
+    ui:
+      always-include: true
+    root-path: /_app-state/health
+  elasticsearch:
+    hosts: ${elasticsearch-address}
+    health:
+      enabled: true
+
