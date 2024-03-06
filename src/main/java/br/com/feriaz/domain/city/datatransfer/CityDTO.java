@@ -8,29 +8,61 @@ import io.quarkus.runtime.annotations.RegisterForReflection;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @RegisterForReflection
 public class CityDTO {
-    private Integer linha;
-    private String skuMunicipio;
+    private String skuIBGE;
+    private String siglaPais;
+    private String type;
+    private String ordemAlfabetica;
+    private String skuFeriaz;
     private String municipio;
-    private String skuPais;
-    private String cep;
-    private String tipo;
-    private String h;
+    private String pais;
+    private String regiao;
+    private String uf;
+    private String regiaoTuristica;
+    private String arrecadacao;
+    private String cluster;
+    private String paisCamel;
+    private String nomeEstado;
+    private String continente;
 
-
-    public Integer getLinha() {
-        return linha;
+    // Getters e Setters
+    public String getSkuIBGE() {
+        return skuIBGE;
     }
 
-    public void setLinha(Integer linha) {
-        this.linha = linha;
+    public void setSkuIBGE(String skuIBGE) {
+        this.skuIBGE = skuIBGE;
     }
 
-    public String getSkuMunicipio() {
-        return skuMunicipio;
+    public String getSiglaPais() {
+        return siglaPais;
     }
 
-    public void setSkuMunicipio(String skuMunicipio) {
-        this.skuMunicipio = skuMunicipio;
+    public void setSiglaPais(String siglaPais) {
+        this.siglaPais = siglaPais;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOrdemAlfabetica() {
+        return ordemAlfabetica;
+    }
+
+    public void setOrdemAlfabetica(String ordemAlfabetica) {
+        this.ordemAlfabetica = ordemAlfabetica;
+    }
+
+    public String getSkuFeriaz() {
+        return skuFeriaz;
+    }
+
+    public void setSkuFeriaz(String skuFeriaz) {
+        this.skuFeriaz = skuFeriaz;
     }
 
     public String getMunicipio() {
@@ -41,35 +73,75 @@ public class CityDTO {
         this.municipio = municipio;
     }
 
-    public String getSkuPais() {
-        return skuPais;
+    public String getPais() {
+        return pais;
     }
 
-    public void setSkuPais(String skuPais) {
-        this.skuPais = skuPais;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
-    public String getCep() {
-        return cep;
+    public String getRegiao() {
+        return regiao;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setRegiao(String regiao) {
+        this.regiao = regiao;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getUf() {
+        return uf;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setUf(String uf) {
+        this.uf = uf;
     }
 
-    public String getH() {
-        return h;
+    public String getRegiaoTuristica() {
+        return regiaoTuristica;
     }
 
-    public void setH(String h) {
-        this.h = h;
+    public void setRegiaoTuristica(String regiaoTuristica) {
+        this.regiaoTuristica = regiaoTuristica;
+    }
+
+    public String getArrecadacao() {
+        return arrecadacao;
+    }
+
+    public void setArrecadacao(String arrecadacao) {
+        this.arrecadacao = arrecadacao;
+    }
+
+    public String getCluster() {
+        return cluster;
+    }
+
+    public void setCluster(String cluster) {
+        this.cluster = cluster;
+    }
+
+    public String getPaisCamel() {
+        return paisCamel;
+    }
+
+    public void setPaisCamel(String paisCamel) {
+        this.paisCamel = paisCamel;
+    }
+
+    public String getNomeEstado() {
+        return nomeEstado;
+    }
+
+    public void setNomeEstado(String nomeEstado) {
+        this.nomeEstado = nomeEstado;
+    }
+
+    public String getContinente() {
+        return continente;
+    }
+
+    public void setContinente(String continente) {
+        this.continente = continente;
     }
 }
