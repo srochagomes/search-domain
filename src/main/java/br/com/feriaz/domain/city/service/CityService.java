@@ -34,8 +34,8 @@ public class CityService {
                     String.format("/%s/_search", INDEX));
 
 
-            CitySearchDTO citySearch = createSearch(searchData,4);
-            request.setJsonEntity(mapper.writeValueAsString(citySearch));
+            String citySearch = createSearch(searchData);
+            request.setJsonEntity(citySearch);
 
             Response response = restClient.performRequest(request);
 
@@ -59,19 +59,60 @@ public class CityService {
         }
     }
 
-    private CitySearchDTO createSearch(SearchData searchData, Integer maxResult) {
-        CitySearchDTO searchDTO = new CitySearchDTO();
-        searchDTO.setSize(maxResult);
-        CitySearchDTO.QueryDTO queryDTO = new CitySearchDTO.QueryDTO();
-        searchDTO.setQuery(queryDTO);
-        CitySearchDTO.MatchDTO matchDTO = new CitySearchDTO.MatchDTO();
-        queryDTO.setMatch(matchDTO);
-        CitySearchDTO.PhoneticDTO phoneticDTO = new CitySearchDTO.PhoneticDTO();
-        phoneticDTO.setQuery(searchData.getSearchBy());
-        phoneticDTO.setFuzziness("AUTO");
+    private String createSearch(SearchData searchData) {
+        StringBuilder stringBuilder = new StringBuilder();
 
-        matchDTO.setMunicipio(phoneticDTO);
+        return "{\n" +
+                "  \"query\": {\n" +
+                "    \"bool\": {\n" +
+                "      \"should\": [\n" +
+                "        {\n" +
+                "          \"multi_match\": {\n" +
+                "            \"query\": \""+searchData.getSearchBy()+"\",\n" +
+                "            \"fields\": [\n" +
+                "              \"municipio^2\",\n" +
+                "              \"nomeEstado^2\",\n" +
+                "              \"paisCamel^2\",\n" +
+                "              \"regiaoTuristica^2\",\n" +
+                "              \"municipio.phonetic^2\",\n" +
+                "              \"nomeEstado.phonetic^2\",\n" +
+                "              \"paisCamel.phonetic^2\",\n" +
+                "              \"regiaoTuristica.phonetic^2\",\n" +
+                "              \"municipio.lowercase^2\",\n" +
+                "              \"nomeEstado.lowercase^2\",\n" +
+                "              \"paisCamel.lowercase^2\",\n" +
+                "              \"regiaoTuristica.lowercase^2\"\n" +
+                "            ],\n" +
+                "            \"type\": \"best_fields\",\n" +
+                "            \"operator\": \"or\"\n" +
+                "          }\n" +
+                "        },\n" +
+                "        {\n" +
+                "          \"multi_match\": {\n" +
+                "            \"query\": \""+searchData.getSearchBy()+"\",\n" +
+                "            \"fields\": [\n" +
+                "              \"municipio\",\n" +
+                "              \"nomeEstado\",\n" +
+                "              \"paisCamel\",\n" +
+                "              \"regiaoTuristica\",\n" +
+                "              \"municipio.phonetic^2\",\n" +
+                "              \"nomeEstado.phonetic^2\",\n" +
+                "              \"paisCamel.phonetic^2\",\n" +
+                "              \"regiaoTuristica.phonetic^2\",\n" +
+                "              \"municipio.lowercase^2\",\n" +
+                "              \"nomeEstado.lowercase^2\",\n" +
+                "              \"paisCamel.lowercase^2\",\n" +
+                "              \"regiaoTuristica.lowercase^2\"\n" +
+                "            ],\n" +
+                "            \n" +
+                "            \"fuzziness\": \"AUTO\"\n" +
+                "          }\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    }\n" +
+                "  },\n" +
+                "  \"size\": "+searchData.getSize()+"\n" +
+                "}\n";
 
-        return searchDTO;
     }
 }
