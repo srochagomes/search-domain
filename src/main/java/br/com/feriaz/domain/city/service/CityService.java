@@ -60,7 +60,6 @@ public class CityService {
     }
 
     private String createSearch(SearchData searchData) {
-        StringBuilder stringBuilder = new StringBuilder();
 
         return "{\n" +
                 "  \"query\": {\n" +
@@ -84,7 +83,8 @@ public class CityService {
                 "              \"regiaoTuristica.lowercase^2\"\n" +
                 "            ],\n" +
                 "            \"type\": \"best_fields\",\n" +
-                "            \"operator\": \"or\"\n" +
+                "            \"operator\": \"or\",\n" +
+                "            \"tie_breaker\": 0.3  // Adicionando o tie_breaker\n" +
                 "          }\n" +
                 "        },\n" +
                 "        {\n" +
@@ -104,15 +104,24 @@ public class CityService {
                 "              \"paisCamel.lowercase^2\",\n" +
                 "              \"regiaoTuristica.lowercase^2\"\n" +
                 "            ],\n" +
-                "            \n" +
                 "            \"fuzziness\": \"AUTO\"\n" +
                 "          }\n" +
                 "        }\n" +
                 "      ]\n" +
                 "    }\n" +
                 "  },\n" +
-                "  \"size\": "+searchData.getSize()+"\n" +
+                "  \"size\": "+searchData.getSize()+",\n" +
+                "  \"sort\": [\n" +
+                "    {\n" +
+                "      \"type\": { \"order\": \"desc\" }  // Classificação por type em ordem decrescente\n" +
+                "    },\n" +
+                "  \n" +
+                "    {\n" +
+                "      \"_score\": { \"order\": \"desc\" }  // Classificação por score (relevância)\n" +
+                "    }\n" +
+                "  ]\n" +
                 "}\n";
+
 
     }
 }
