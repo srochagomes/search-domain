@@ -61,66 +61,68 @@ public class CityService {
 
     private String createSearch(SearchData searchData) {
 
-        return "{\n" +
-                "  \"query\": {\n" +
-                "    \"bool\": {\n" +
-                "      \"should\": [\n" +
-                "        {\n" +
-                "          \"multi_match\": {\n" +
-                "            \"query\": \""+searchData.getSearchBy()+"\",\n" +
-                "            \"fields\": [\n" +
-                "              \"municipio^2\",\n" +
-                "              \"nomeEstado^2\",\n" +
-                "              \"paisCamel^2\",\n" +
-                "              \"regiaoTuristica^2\",\n" +
-                "              \"municipio.phonetic^2\",\n" +
-                "              \"nomeEstado.phonetic^2\",\n" +
-                "              \"paisCamel.phonetic^2\",\n" +
-                "              \"regiaoTuristica.phonetic^2\",\n" +
-                "              \"municipio.lowercase^2\",\n" +
-                "              \"nomeEstado.lowercase^2\",\n" +
-                "              \"paisCamel.lowercase^2\",\n" +
-                "              \"regiaoTuristica.lowercase^2\"\n" +
-                "            ],\n" +
-                "            \"type\": \"best_fields\",\n" +
-                "            \"operator\": \"or\",\n" +
-                "            \"tie_breaker\": 0.3  // Adicionando o tie_breaker\n" +
-                "          }\n" +
-                "        },\n" +
-                "        {\n" +
-                "          \"multi_match\": {\n" +
-                "            \"query\": \""+searchData.getSearchBy()+"\",\n" +
-                "            \"fields\": [\n" +
-                "              \"municipio\",\n" +
-                "              \"nomeEstado\",\n" +
-                "              \"paisCamel\",\n" +
-                "              \"regiaoTuristica\",\n" +
-                "              \"municipio.phonetic^2\",\n" +
-                "              \"nomeEstado.phonetic^2\",\n" +
-                "              \"paisCamel.phonetic^2\",\n" +
-                "              \"regiaoTuristica.phonetic^2\",\n" +
-                "              \"municipio.lowercase^2\",\n" +
-                "              \"nomeEstado.lowercase^2\",\n" +
-                "              \"paisCamel.lowercase^2\",\n" +
-                "              \"regiaoTuristica.lowercase^2\"\n" +
-                "            ],\n" +
-                "            \"fuzziness\": \"AUTO\"\n" +
-                "          }\n" +
-                "        }\n" +
-                "      ]\n" +
-                "    }\n" +
-                "  },\n" +
-                "  \"size\": "+searchData.getSize()+",\n" +
-                "  \"sort\": [\n" +
-                "    {\n" +
-                "      \"type\": { \"order\": \"desc\" }  // Classificação por type em ordem decrescente\n" +
-                "    },\n" +
-                "  \n" +
-                "    {\n" +
-                "      \"_score\": { \"order\": \"desc\" }  // Classificação por score (relevância)\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}\n";
+        return """
+       {
+         "query": {
+           "bool": {
+             "should": [
+               {
+                 "multi_match": {
+                   "query": "%s",
+                   "fields": [
+                     "municipio^2",
+                     "nomeEstado^2",
+                     "paisCamel^2",
+                     "regiaoTuristica^2",
+                     "municipio.phonetic^2",
+                     "nomeEstado.phonetic^2",
+                     "paisCamel.phonetic^2",
+                     "regiaoTuristica.phonetic^2",
+                     "municipio.lowercase^2",
+                     "nomeEstado.lowercase^2",
+                     "paisCamel.lowercase^2",
+                     "regiaoTuristica.lowercase^2"
+                   ],
+                   "type": "best_fields",
+                   "operator": "or",
+                   "tie_breaker": 0.3  // Adicionando o tie_breaker
+                 }
+               },
+               {
+                 "multi_match": {
+                   "query": "%s",
+                   "fields": [
+                     "municipio",
+                     "nomeEstado",
+                     "paisCamel",
+                     "regiaoTuristica",
+                     "municipio.phonetic^2",
+                     "nomeEstado.phonetic^2",
+                     "paisCamel.phonetic^2",
+                     "regiaoTuristica.phonetic^2",
+                     "municipio.lowercase^2",
+                     "nomeEstado.lowercase^2",
+                     "paisCamel.lowercase^2",
+                     "regiaoTuristica.lowercase^2"
+                   ],
+                   "fuzziness": "AUTO"
+                 }
+               }
+             ]
+           }
+         },
+         "size": %d,
+         "sort": [
+           {
+             "type": { "order": "desc" }  // Classificação por type em ordem decrescente
+           },
+         
+           {
+             "_score": { "order": "desc" }  // Classificação por score (relevância)
+           }
+         ]
+       }
+       """.formatted(searchData.getSearchBy(), searchData.getSearchBy(), searchData.getSize());
 
 
     }
